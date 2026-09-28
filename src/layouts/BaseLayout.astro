@@ -27,6 +27,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    {Astro.site && <meta property="og:image" content={new URL(`${base}social-preview.png`, Astro.site)} />}
     <title>{title}</title>
   </head>
   <body>
