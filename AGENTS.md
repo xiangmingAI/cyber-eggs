@@ -35,6 +35,8 @@ Example:
 
 Never create an AI commit without the `[AI]` prefix.
 
+Git author identity for this repo is set to `向明 <332400562+xiangmingAI@users.noreply.github.com>` (repo-local config). Do not add `Co-Authored-By` trailers or any bot co-author lines to commits.
+
 ## Scope discipline
 
 Implement one playbook task ID at a time. Do not silently expand a UI task into data collection, subscriptions, analytics, an admin panel, or a new framework.
