@@ -1,0 +1,91 @@
+---
+import type { EggEntry } from "../lib/eggs";
+
+interface Props {
+  egg: EggEntry;
+}
+
+const { egg } = Astro.props;
+const { data } = egg;
+const base = import.meta.env.BASE_URL;
+
+const statusLabels = {
+  fresh: "鲜蛋 · 可领取",
+  expiring: "临期 · 请尽快领取",
+  stale: "待复核 · 正在确认",
+  expired: "臭蛋 · 已失效",
+} as const;
+
+const statusHints = {
+  fresh: "额度可用，等你来捡。",
+  expiring: "即将过期，请尽快领取。",
+  stale: "正在审核中，请耐心等待。",
+  expired: "该额度已失效，无法领取。",
+} as const;
+
+const ctaLabels = {
+  fresh: "去领取",
+  expiring: "立即领取",
+  stale: "查看蛋源",
+  expired: "查看历史",
+} as const;
+
+const searchText = [
+  data.provider,
+  data.title,
+  data.summary,
+  data.status,
+  data.kind,
+  ...data.modalities,
+  ...data.regions,
+]
+  .join(" ")
+  .toLowerCase();
+
+const daysLeft = data.expiresAt
+  ? Math.ceil((Date.parse(`${data.expiresAt}T00:00:00Z`) - Date.parse(`${data.verifiedAt}T00:00:00Z`)) / 86400000)
+  : null;
+---
+
+<article
+  class:list={["egg-card", `egg-card--${data.status}`]}
+  data-egg-card
+  data-search={searchText}
+  data-status={data.status}
+  data-kind={data.kind}
+>
+  <div class="egg-card__meta">
+    <strong>{data.provider}</strong>
+    <span class="demo-tag">演示数据 · DEMO</span>
+  </div>
+  <div class="egg-card__stage">
+    <p class="status"><i aria-hidden="true"></i>{statusLabels[data.status]}</p>
+    <p class="egg-card__hint">{statusHints[data.status]}</p>
+    <p class="egg-card__chalk" aria-hidden="true">
+      {data.status === "expired" ? "NO MORE\nFREE AI\nHERE." : "MORE\nFREE AI\nFOR\nEVERYONE."}
+    </p>
+    <span class="egg-card__egg" aria-hidden="true"></span>
+    {data.status === "expiring" && daysLeft !== null && (
+      <span class="stamp stamp--expiring">{`剩 ${Math.max(daysLeft, 1)} 天`}</span>
+    )}
+    {data.status === "expired" && <span class="stamp stamp--expired">已失效</span>}
+    <strong class="egg-card__tag">
+      {data.quota.label}
+      <span class="barcode" aria-hidden="true"></span>
+      <em>{data.provider.toUpperCase()}</em>
+    </strong>
+    <span class="egg-card__shelf" aria-hidden="true"></span>
+  </div>
+  <h3>{data.title}</h3>
+  <p>{data.summary}</p>
+  <ul class="chips" aria-label="额度标签">
+    {data.modalities.map((modality) => <li>{modality}</li>)}
+    {data.regions.map((region) => <li>{region}</li>)}
+  </ul>
+  <a
+    class:list={["button", "egg-card__cta", `egg-card__cta--${data.status}`]}
+    href={`${base}eggs/${egg.id}/`}
+  >
+    {ctaLabels[data.status]} <span aria-hidden="true">→</span>
+  </a>
+</article>

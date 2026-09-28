@@ -1,0 +1,153 @@
+---
+import EggCard from "../components/EggCard.astro";
+import Header from "../components/Header.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getEggs } from "../lib/eggs";
+
+const eggs = await getEggs();
+const freshCount = eggs.filter((egg) => egg.data.status === "fresh").length;
+const recurringCount = eggs.filter((egg) => egg.data.kind === "recurring").length;
+const expiringCount = eggs.filter((egg) => egg.data.status === "expiring").length;
+---
+
+<BaseLayout>
+  <Header />
+  <main>
+    <section class="hero page-shell">
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="eyebrow__chip">AI FREE QUOTA RADAR</span><span class="eyebrow__slashes" aria-hidden="true">///</span></p>
+        <h1>来这里，<br />捡走 AI 时代的鸡蛋。</h1>
+        <p class="hero__intro">收集散落在各家厂商里的免费额度。</p>
+        <a class="button button--large" href="#egg-grid">开始捡蛋 <span aria-hidden="true">→</span></a>
+        <p class="hero__demo">演示阶段仅展示虚构数据，不代表真实活动。</p>
+        <p class="hero__note">SAME EGGS.<br />A BRIGHTER TOMORROW.<span class="hero__note-line" aria-hidden="true"></span></p>
+      </div>
+      <div class="shelf" role="img" aria-label="黑色货架上摆放着三枚演示鸡蛋：500 万 TOKEN、每日 100 次、开源 GRANT">
+        <div class="shelf__top">
+          <p class="shelf__sign">/// GOOD EGGS FOR A MORE OPEN AI WORLD ///</p>
+          <p class="shelf__market"><span class="barcode barcode--light" aria-hidden="true"></span><span>CYBER-EGGS<br />SUPERMARKET</span></p>
+        </div>
+        <div class="shelf__body">
+          <div class="shelf__eggs">
+            <div class="shelf-egg"><i></i><strong>500万 TOKEN<span class="barcode" aria-hidden="true"></span><em>CYBER-EGGS</em></strong></div>
+            <div class="shelf-egg shelf-egg--fresh"><i></i><strong>每日 100 次<span class="barcode" aria-hidden="true"></span><em>CYBER-EGGS</em></strong></div>
+            <div class="shelf-egg"><i></i><strong>开源 GRANT<span class="barcode" aria-hidden="true"></span><em>CYBER-EGGS</em></strong></div>
+          </div>
+          <p class="shelf__chalk" aria-hidden="true">MORE<br />FREE AI<br />FOR<br />EVERYONE.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog page-shell" aria-labelledby="catalog-title">
+      <div class="catalog__toolbar">
+        <div class="stats" aria-label="演示统计">
+          <div><span class="status-dot status-dot--fresh"></span><small>鲜蛋</small><strong class="stats__num stats__num--fresh">{freshCount}</strong></div>
+          <div><span class="status-dot status-dot--yolk"></span><small>长期免费</small><strong class="stats__num stats__num--yolk">{recurringCount}</strong></div>
+          <div><span class="status-dot status-dot--danger"></span><small>即将过期</small><strong class="stats__num stats__num--danger">{expiringCount}</strong></div>
+        </div>
+
+        <div class="filter-bar" aria-label="鸡蛋筛选">
+          <label class="filter-bar__search">
+            <span class="sr-only">搜索鸡蛋</span>
+            <input id="egg-search" type="search" placeholder="搜索厂商、产品或关键词（如：NovaCloud、API…）" />
+          </label>
+          <label>
+            <span class="sr-only">类型</span>
+            <select id="egg-kind">
+              <option value="">全部分类</option>
+              <option value="recurring">周期免费</option>
+              <option value="signup">新用户</option>
+              <option value="limited">限时</option>
+              <option value="grant">Grant</option>
+            </select>
+          </label>
+          <label>
+            <span class="sr-only">状态</span>
+            <select id="egg-status">
+              <option value="">状态不限</option>
+              <option value="fresh">鲜蛋</option>
+              <option value="expiring">临期</option>
+              <option value="stale">待复核</option>
+              <option value="expired">已失效</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DEMO INVENTORY</p>
+          <h2 id="catalog-title">演示货架</h2>
+        </div>
+        <a href={`${import.meta.env.BASE_URL}api/v1/eggs.json`}>JSON 数据 →</a>
+      </div>
+
+      <div class="egg-grid" id="egg-grid">
+        {eggs.map((egg) => <EggCard egg={egg} />)}
+      </div>
+      <div class="empty-state" id="egg-empty" hidden>
+        <div class="empty-state__copy">
+          <p class="eyebrow"><span class="eyebrow__chip">EMPTY STATE · SEARCH</span><span class="eyebrow__slashes" aria-hidden="true">///</span></p>
+          <strong>货架上没有符合条件的鸡蛋</strong>
+          <p>试试调整筛选条件，发现更多 AI 额度。</p>
+          <button class="button" type="button" id="egg-clear">清空筛选 <span aria-hidden="true">→</span></button>
+        </div>
+        <div class="empty-state__shelf" aria-hidden="true">
+          <p class="empty-state__chalk">STILL<br />MORE EGGS<br />OUT THERE.</p>
+          <span class="empty-state__egg"></span>
+          <span class="empty-state__egg empty-state__egg--half"></span>
+          <span class="empty-state__board"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust page-shell" id="trust">
+      <p class="eyebrow">WHY TRUST THE EGGS?</p>
+      <h2>来源、条件和核验日期，比热闹更重要。</h2>
+      <p>当前仅搭建展示骨架。真实优惠收集、自动核验与订阅机制将在后续阶段实现。</p>
+    </section>
+  </main>
+  <footer class="site-footer page-shell">
+    <span>© 2026 cyber-eggs / 赛博鸡蛋 ｜ 收集免费额度，让更好的 AI 触手可及。</span>
+    <span class="site-footer__sign"><span class="hazard" aria-hidden="true"></span>GOOD EGGS FEED A MORE OPEN WORLD.</span>
+  </footer>
+
+  <script>
+    const search = document.querySelector<HTMLInputElement>("#egg-search");
+    const status = document.querySelector<HTMLSelectElement>("#egg-status");
+    const kind = document.querySelector<HTMLSelectElement>("#egg-kind");
+    const cards = [...document.querySelectorAll<HTMLElement>("[data-egg-card]")];
+    const empty = document.querySelector<HTMLElement>("#egg-empty");
+    const clear = document.querySelector<HTMLButtonElement>("#egg-clear");
+
+    function applyFilters() {
+      const query = search?.value.trim().toLowerCase() ?? "";
+      const selectedStatus = status?.value ?? "";
+      const selectedKind = kind?.value ?? "";
+      let visible = 0;
+
+      for (const card of cards) {
+        const matches =
+          (!query || card.dataset.search?.includes(query)) &&
+          (!selectedStatus || card.dataset.status === selectedStatus) &&
+          (!selectedKind || card.dataset.kind === selectedKind);
+
+        card.hidden = !matches;
+        visible += Number(matches);
+      }
+
+      if (empty) empty.hidden = visible !== 0;
+    }
+
+    search?.addEventListener("input", applyFilters);
+    status?.addEventListener("change", applyFilters);
+    kind?.addEventListener("change", applyFilters);
+    clear?.addEventListener("click", () => {
+      if (search) search.value = "";
+      if (status) status.value = "";
+      if (kind) kind.value = "";
+      applyFilters();
+      search?.focus();
+    });
+  </script>
+</BaseLayout>

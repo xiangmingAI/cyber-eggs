@@ -1,0 +1,27 @@
+{
+  "provider": "NullStack",
+  "title": "周末实验额度",
+  "summary": "已经失效的演示额度，用于验证臭蛋归档样式。",
+  "kind": "limited",
+  "status": "expired",
+  "quota": {
+    "label": "100 万 TOKEN",
+    "reset": "once"
+  },
+  "modalities": ["text"],
+  "regions": ["亚洲"],
+  "requirements": {
+    "card": false,
+    "phone": true,
+    "kyc": false
+  },
+  "claimUrl": "https://example.com/null-stack/claim",
+  "sourceUrl": "https://example.com/null-stack/archive",
+  "verifiedAt": "2026-07-01",
+  "expiresAt": "2026-07-07",
+  "featured": false,
+  "demo": true,
+  "steps": [
+    "查看历史活动说明"
+  ]
+}

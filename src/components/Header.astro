@@ -1,0 +1,17 @@
+---
+const base = import.meta.env.BASE_URL;
+const githubUrl = import.meta.env.PUBLIC_GITHUB_REPO_URL ?? "https://github.com/";
+---
+
+<header class="site-header">
+  <a class="brand" href={base} aria-label="cyber-eggs 首页">
+    <img src={`${base}logo.png`} alt="" width="44" height="44" />
+    <span>cyber-eggs</span>
+  </a>
+  <nav aria-label="主要导航">
+    <a href={`${base}#egg-grid`}>全部鸡蛋</a>
+    <a href={`${base}#trust`}>项目说明</a>
+    <a class="button button--small button--outline" href={githubUrl}>GitHub</a>
+    <span class="header-tagline" aria-hidden="true"><i>//</i>FREE QUOTA<br />FOR A BRIGHTER TOMORROW.</span>
+  </nav>
+</header>

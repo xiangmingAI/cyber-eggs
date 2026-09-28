@@ -1,0 +1,151 @@
+---
+import Header from "../../components/Header.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getEggs, type EggEntry } from "../../lib/eggs";
+
+export async function getStaticPaths() {
+  const eggs = await getEggs();
+  return eggs.map((egg) => ({ params: { id: egg.id }, props: { egg } }));
+}
+
+interface Props {
+  egg: EggEntry;
+}
+
+const { egg } = Astro.props;
+const { data } = egg;
+const base = import.meta.env.BASE_URL;
+
+const statusLabels = {
+  fresh: "鲜蛋 · 可领取",
+  expiring: "临期 · 请尽快领取",
+  stale: "待复核 · 正在确认",
+  expired: "臭蛋 · 已失效",
+} as const;
+
+const requirementText = (value: boolean | null) =>
+  value === null ? "未知" : value ? "需要" : "不需要";
+
+const kindLabels = {
+  recurring: "周期免费",
+  signup: "新用户福利",
+  limited: "限时额度",
+  grant: "开发者 Grant",
+} as const;
+
+const modalityLabels: Record<string, string> = {
+  text: "文本",
+  image: "图像",
+  audio: "音频",
+  video: "视频",
+  embedding: "Embedding",
+};
+
+const audienceLabels = {
+  recurring: "全部用户",
+  signup: "新用户",
+  limited: "限时活动用户",
+  grant: "开源维护者",
+} as const;
+
+const ctaLabels = {
+  fresh: "立即领取",
+  expiring: "立即领取",
+  stale: "查看详情",
+  expired: "已失效 · 查看历史",
+} as const;
+
+const daysLeft = data.expiresAt
+  ? Math.max(0, Math.ceil((Date.parse(`${data.expiresAt}T00:00:00Z`) - Date.now()) / 86400000))
+  : null;
+
+const githubUrl = import.meta.env.PUBLIC_GITHUB_REPO_URL ?? "https://github.com/";
+---
+
+<BaseLayout title={`${data.provider} ${data.title} · cyber-eggs`} description={data.summary}>
+  <Header />
+  <main class="detail page-shell">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href={base}>全部鸡蛋</a><span>/</span><span>{data.provider}</span>
+    </nav>
+
+    <div class="detail__grid">
+      <div>
+        <section class:list={["detail-hero", `detail-hero--${data.status}`]}>
+          <div class="detail-hero__top">
+            <span class="status status--chip"><i aria-hidden="true"></i>{statusLabels[data.status]}</span>
+            <span class="eyebrow__slashes" aria-hidden="true">///</span>
+            <span class="detail-hero__note">SAME EGGS.<br />A BRIGHTER TOMORROW.<span class="hero__note-line" aria-hidden="true"></span></span>
+          </div>
+          <h1><span class="detail-hero__provider">{data.provider}</span> {data.title}</h1>
+          <p class="quota">{data.quota.label}</p>
+          <p>{data.summary}</p>
+          <ul class="chips">
+            {data.modalities.map((modality) => <li># {modalityLabels[modality] ?? modality}</li>)}
+            {data.regions.map((region) => <li>{region}</li>)}
+          </ul>
+          <p class="demo-tag">演示数据 · DEMO</p>
+        </section>
+
+        <section class="panel">
+          <h2>使用条件 <span class="eyebrow__slashes" aria-hidden="true">///</span></h2>
+          <dl class="requirements">
+            <div><dt>领取对象</dt><dd>{audienceLabels[data.kind]}</dd></div>
+            <div><dt>有效期</dt><dd>{data.expiresAt ?? "长期"}</dd></div>
+            <div><dt>地区</dt><dd>{data.regions.join(" / ")}</dd></div>
+            <div><dt>信用卡</dt><dd>{requirementText(data.requirements.card)}</dd></div>
+            <div><dt>手机号</dt><dd>{requirementText(data.requirements.phone)}</dd></div>
+            <div><dt>KYC</dt><dd>{requirementText(data.requirements.kyc)}</dd></div>
+          </dl>
+        </section>
+
+        <section class="detail-columns">
+          <div class="receipt">
+            <h2>官方规则来源 <span class="eyebrow__slashes" aria-hidden="true">///</span><span class="receipt__stamp">✓ 已核验</span></h2>
+            <p>以下为官方活动页面，建议在领取前仔细阅读最新规则。Demo 链接不跳转到真实厂商。</p>
+            <code>{data.sourceUrl}</code>
+            <p class="receipt__foot"><span>最后核验　<strong>{data.verifiedAt}</strong></span><span class="receipt__barcode" aria-hidden="true"><i class="barcode"></i>CYBER-EGGS VERIFIED</span></p>
+          </div>
+          <div class="panel">
+            <h2>领取步骤 <span class="eyebrow__slashes" aria-hidden="true">///</span></h2>
+            <ol class="steps">
+              {data.steps.map((step) => <li>{step}</li>)}
+            </ol>
+          </div>
+        </section>
+      </div>
+
+      <div class="detail__side">
+        <aside class:list={["claim-panel", `claim-panel--${data.status}`]}>
+          <div class="claim-panel__top">
+            <span>/// CYBER-EGGS SUPERMARKET</span>
+            <span class="barcode barcode--light" aria-hidden="true"></span>
+          </div>
+          <div class="claim-panel__stage">
+            <span class="claim-panel__egg" aria-hidden="true"></span>
+            <p class="claim-panel__chalk" aria-hidden="true">GOOD<br />EGGS<br />FOR A<br />MORE OPEN<br />AI WORLD.</p>
+            <strong class="claim-panel__tag">
+              {data.quota.label}
+              <span class="barcode" aria-hidden="true"></span>
+              <em>CYBER-EGGS</em>
+            </strong>
+            <span class="claim-panel__shelf" aria-hidden="true"></span>
+          </div>
+          <span class="button button--large claim-panel__cta" aria-disabled="true">{ctaLabels[data.status]} <i aria-hidden="true">→</i></span>
+          <a class="button claim-panel__source" href={data.sourceUrl} rel="noreferrer">查看蛋源 <i aria-hidden="true">↗</i></a>
+          <dl class="claim-panel__meta">
+            <div><dt>到期时间</dt><dd>{data.expiresAt ? (daysLeft !== null && daysLeft > 0 ? `还有 ${daysLeft} 天` : "已到期") : "长期有效"}</dd></div>
+            <div><dt>来自</dt><dd>{data.provider}</dd></div>
+            <div><dt>蛋的类型</dt><dd>{kindLabels[data.kind]}</dd></div>
+            <div><dt>适用场景</dt><dd>{data.modalities.map((m) => modalityLabels[m] ?? m).join(" / ")}</dd></div>
+          </dl>
+          <p class="claim-panel__note">演示阶段：按钮不跳转到真实厂商，仅展示信息结构。</p>
+        </aside>
+        <aside class="report-panel">
+          <span class="report-panel__icon" aria-hidden="true"></span>
+          <p><strong>信息有误？</strong><a href={githubUrl}>报告臭蛋 →</a><br />在 GitHub 上提交 Issue，帮助我们更准确地收集信息。</p>
+        </aside>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

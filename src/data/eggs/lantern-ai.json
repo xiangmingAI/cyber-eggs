@@ -1,0 +1,29 @@
+{
+  "provider": "Lantern AI",
+  "title": "每日绘图蛋",
+  "summary": "每日刷新的演示图片额度，用于验证临期状态和周期额度。",
+  "kind": "limited",
+  "status": "expiring",
+  "quota": {
+    "label": "每日 100 次",
+    "reset": "daily"
+  },
+  "modalities": ["image"],
+  "regions": ["全球"],
+  "requirements": {
+    "card": false,
+    "phone": false,
+    "kyc": false
+  },
+  "claimUrl": "https://example.com/lantern-ai/claim",
+  "sourceUrl": "https://example.com/lantern-ai/rules",
+  "verifiedAt": "2026-09-28",
+  "expiresAt": "2026-10-01",
+  "featured": true,
+  "demo": true,
+  "steps": [
+    "登录演示控制台",
+    "启用每日免费额度",
+    "创建测试 API Key"
+  ]
+}

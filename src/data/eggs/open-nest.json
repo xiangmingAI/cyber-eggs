@@ -1,0 +1,29 @@
+{
+  "provider": "OpenNest",
+  "title": "开源项目 Grant",
+  "summary": "面向开源维护者的演示资助，用于验证待复核状态和 Grant 类型。",
+  "kind": "grant",
+  "status": "stale",
+  "quota": {
+    "label": "开源 GRANT",
+    "reset": "ongoing"
+  },
+  "modalities": ["text", "image", "embedding"],
+  "regions": ["全球"],
+  "requirements": {
+    "card": null,
+    "phone": null,
+    "kyc": null
+  },
+  "claimUrl": "https://example.com/open-nest/apply",
+  "sourceUrl": "https://example.com/open-nest/rules",
+  "verifiedAt": "2026-08-01",
+  "expiresAt": null,
+  "featured": false,
+  "demo": true,
+  "steps": [
+    "准备公开仓库地址",
+    "填写演示申请表",
+    "等待人工审核"
+  ]
+}
