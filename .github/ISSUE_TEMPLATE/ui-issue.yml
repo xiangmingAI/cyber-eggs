@@ -1,0 +1,44 @@
+name: 界面问题
+description: 报告页面显示、布局或交互上的问题
+title: "[UI] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: page
+    attributes:
+      label: 问题页面
+      options:
+        - 首页（货架与筛选）
+        - 鸡蛋详情页
+        - 404 页面
+        - 其他页面
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你看到的问题
+      description: 例如布局错乱、按钮点不到、文字看不清。附上出错时的浏览器视口宽度会更好排查。
+      placeholder: 在手机上打开首页，卡片下面的按钮被裁掉了……
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望的表现
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: 浏览器与设备
+      placeholder: 例如 iPhone 15 / Safari，或 Windows / Chrome 126
+    validations:
+      required: false
+  - type: textarea
+    id: extras
+    attributes:
+      label: 截图或补充信息
+      description: 可直接粘贴截图。
+    validations:
+      required: false

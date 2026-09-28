@@ -1,0 +1,36 @@
+name: 功能建议
+description: 对展示站的功能或内容提出建议
+title: "[建议] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        开放讨论、产品想法请去 [Discussions](https://github.com/xiangmingAI/cyber-eggs/discussions)。
+        当前阶段不收集真实优惠数据，鸡蛋投稿表单暂未开放。
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 建议内容
+      placeholder: 希望货架支持按模态筛选……
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: 相关区域
+      options:
+        - 筛选与搜索
+        - 鸡蛋卡片
+        - 详情页
+        - 数据接口（JSON / RSS）
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 为什么需要它
+      description: 这个建议解决了什么使用场景？
+    validations:
+      required: false

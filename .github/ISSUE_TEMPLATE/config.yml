@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 讨论区 Discussions
+    url: https://github.com/xiangmingAI/cyber-eggs/discussions
+    about: 产品想法、Q&A 和开放讨论请来这里，确认要做后再转成 Issue。
+  - name: 鸡蛋投稿（暂未开放）
+    url: https://github.com/xiangmingAI/cyber-eggs/discussions
+    about: 真实优惠投稿将在数据收集阶段开放，目前站点只展示虚构 Demo 数据。

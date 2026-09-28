@@ -31,6 +31,13 @@ npm audit --audit-level=high
 - 原生 JavaScript 搜索与筛选
 - GitHub Actions CI
 
+## 反馈与讨论
+
+- 发现界面问题（布局错乱、交互异常）：提交 [界面问题](https://github.com/xiangmingAI/cyber-eggs/issues/new?template=ui-issue.yml)
+- 对功能或内容有建议：提交 [功能建议](https://github.com/xiangmingAI/cyber-eggs/issues/new?template=feature-suggestion.yml)
+- 产品想法、Q&A 和开放讨论：去 [Discussions](https://github.com/xiangmingAI/cyber-eggs/discussions)
+- 鸡蛋投稿（真实优惠）：暂未开放，将在数据收集阶段提供独立表单
+
 ## 继续开发
 
 先阅读：
