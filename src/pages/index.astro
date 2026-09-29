@@ -19,19 +19,19 @@ const expiringCount = eggs.filter((egg) => egg.data.status === "expiring").lengt
         <h1>来这里，<br />捡走 AI 时代的鸡蛋。</h1>
         <p class="hero__intro">收集散落在各家厂商里的免费额度。</p>
         <a class="button button--large" href="#egg-grid">开始捡蛋 <span aria-hidden="true">→</span></a>
-        <p class="hero__demo">演示阶段仅展示虚构数据，不代表真实活动。</p>
+        <p class="hero__demo">数据来自公开线索，经人工审核后发布；领取前请核对最新规则。</p>
         <p class="hero__note">SAME EGGS.<br />A BRIGHTER TOMORROW.<span class="hero__note-line" aria-hidden="true"></span></p>
       </div>
-      <div class="shelf" role="img" aria-label="黑色货架上摆放着三枚演示鸡蛋：500 万 TOKEN、每日 100 次、开源 GRANT">
+      <div class="shelf" role="img" aria-label="黑色货架上摆放着三枚 AI 免费额度鸡蛋">
         <div class="shelf__top">
           <p class="shelf__sign">/// GOOD EGGS FOR A MORE OPEN AI WORLD ///</p>
           <p class="shelf__market"><span class="barcode barcode--light" aria-hidden="true"></span><span>CYBER-EGGS<br />SUPERMARKET</span></p>
         </div>
         <div class="shelf__body">
           <div class="shelf__eggs">
-            <div class="shelf-egg"><i></i><strong>500万 TOKEN<span class="barcode" aria-hidden="true"></span><em>CYBER-EGGS</em></strong></div>
-            <div class="shelf-egg shelf-egg--fresh"><i></i><strong>每日 100 次<span class="barcode" aria-hidden="true"></span><em>CYBER-EGGS</em></strong></div>
-            <div class="shelf-egg"><i></i><strong>开源 GRANT<span class="barcode" aria-hidden="true"></span><em>CYBER-EGGS</em></strong></div>
+            {eggs.slice(0, 3).map((egg, index) => (
+              <div class:list={["shelf-egg", index === 1 && "shelf-egg--fresh"]}><i></i><strong>{egg.data.quota.label}<span class="barcode" aria-hidden="true"></span><em>CYBER-EGGS</em></strong></div>
+            ))}
           </div>
           <p class="shelf__chalk" aria-hidden="true">MORE<br />FREE AI<br />FOR<br />EVERYONE.</p>
         </div>
@@ -40,7 +40,7 @@ const expiringCount = eggs.filter((egg) => egg.data.status === "expiring").lengt
 
     <section class="catalog page-shell" aria-labelledby="catalog-title">
       <div class="catalog__toolbar">
-        <div class="stats" aria-label="演示统计">
+        <div class="stats" aria-label="已发布数据统计">
           <div><span class="status-dot status-dot--fresh"></span><small>鲜蛋</small><strong class="stats__num stats__num--fresh">{freshCount}</strong></div>
           <div><span class="status-dot status-dot--yolk"></span><small>长期免费</small><strong class="stats__num stats__num--yolk">{recurringCount}</strong></div>
           <div><span class="status-dot status-dot--danger"></span><small>即将过期</small><strong class="stats__num stats__num--danger">{expiringCount}</strong></div>
@@ -76,8 +76,8 @@ const expiringCount = eggs.filter((egg) => egg.data.status === "expiring").lengt
 
       <div class="section-heading">
         <div>
-          <p class="eyebrow">DEMO INVENTORY</p>
-          <h2 id="catalog-title">演示货架</h2>
+          <p class="eyebrow">PUBLISHED INVENTORY</p>
+          <h2 id="catalog-title">已发布货架</h2>
         </div>
         <a href={`${import.meta.env.BASE_URL}api/v1/eggs.json`}>JSON 数据 →</a>
       </div>
@@ -104,7 +104,7 @@ const expiringCount = eggs.filter((egg) => egg.data.status === "expiring").lengt
     <section class="trust page-shell" id="trust">
       <p class="eyebrow">WHY TRUST THE EGGS?</p>
       <h2>来源、条件和核验日期，比热闹更重要。</h2>
-      <p>当前仅搭建展示骨架。真实优惠收集、自动核验与订阅机制将在后续阶段实现。</p>
+      <p>每条记录都保留来源、领取条件和核验信息；公开福利可能随时变化，请以服务商页面为准。</p>
     </section>
   </main>
   <footer class="site-footer page-shell">

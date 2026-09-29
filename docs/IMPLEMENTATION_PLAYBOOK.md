@@ -11,7 +11,7 @@
 - **当前成功标准**：本地可启动、构建可通过、Demo 数据可生成首页/详情/API/RSS
 - **技术栈**：Astro 7.3.5、TypeScript 6.0.3、原生 CSS、原生浏览器 JavaScript
 - **终极功能**：访客可以发现、判断并订阅经过核验的 AI 免费额度
-- **当前阶段边界**：只做展示站，不做真实数据收集、自动核验和订阅发送
+- **当前阶段边界**：展示站保持静态；真实数据收集通过同级独立服务 `../cyber-eggs-collector/` 进入候选和人工复核，不自动发布、不做订阅发送
 - **默认循环轮次**：3
 - **安全最大轮次**：6
 - **每轮最大改动点数**：3
@@ -50,7 +50,7 @@
 | CI | 骨架完成 | `.github/workflows/ci.yml` |
 | GitHub Pages 部署 | 未实现 | Task `GH-01` |
 | 视觉精修 | 未实现 | Tasks `UI-01`–`UI-06` |
-| 真实数据 | 明确暂停 | 不得擅自开始 |
+| 真实数据 | 已建立独立采集服务 | `../cyber-eggs-collector/README.md`；批准前不得进入 `src/data/eggs/` |
 
 ## 3. 真相源与阅读顺序
 
@@ -211,6 +211,14 @@ flowchart TD
 - **验收**：直接访问未知路径看到品牌化 404；键盘焦点清晰
 
 ### Wave 3：数据与 GitHub
+
+#### `COLLECT-01` 候选数据收集链路
+
+- **实现**：同级项目 `../cyber-eggs-collector/`；静态站不包含采集运行时代码
+- **来源**：微信公众号搜索/正文、Linux.do feed/search/topic-content、RSS/Atom
+- **处理**：规范化、URL 去重、Crawl4AI/OpenCLI 正文补全、证据评分、人工复核、批准后导出草稿
+- **安全边界**：不覆盖 `src/data/eggs/`；公众号验证页、Linux.do 登录态、Browser Bridge 失败都保留为错误，不生成空候选
+- **验收**：在采集服务目录运行 `python3 -m unittest discover -s tests -v`；实时运行前需连接 OpenCLI Browser Bridge，并人工核验官方领取页
 
 #### `API-01` 静态接口契约
 
@@ -377,7 +385,7 @@ flowchart TD
 - [ ] README 与实际功能一致
 - [ ] 未验证项和已知限制已披露
 
-真实鸡蛋收集、AI 核验和订阅系统是下一阶段，不计入本阶段完成定义。
+自动发布、AI 核验和订阅系统仍是下一阶段，不计入当前完成定义；独立采集服务只负责候选、证据和人工批准前的草稿。
 
 ## 11. 当前实测证据
 
@@ -401,5 +409,6 @@ flowchart TD
 | 2026-09-28 | `GH-01` | 创建 `xiangmingAI/cyber-eggs` 公开仓库；`gh api .../pages build_type=workflow`；推送 `.github/workflows/deploy.yml` 后 `gh run watch` | 仓库 https://github.com/xiangmingai/cyber-eggs；本地 `BASE_PATH=/cyber-eggs` 构建内部链接全部带前缀；Actions 上 build(24s)+deploy(24s) 成功；线上 `/`、`/eggs/nova-cloud/`、`/api/v1/eggs.json`、`/api/v1/meta.json`、`/rss.xml` 均为 200，`/nope/` 返回品牌化 404；线上首页截图渲染正常，GitHub 按钮指向真实仓库 |
 | 2026-09-28 | `GH-02` | 新增 `.github/ISSUE_TEMPLATE/`（config + ui-issue + feature-suggestion），开启 Discussions，更新 README 与详情页报告链接 | CI 与 Deploy 均成功；`/issues/new/choose` 302 到登录/选择页正常；线上详情页"报告臭蛋"指向 issues/new/choose；术语统一为界面问题/功能建议/Discussions，鸡蛋投稿表单保持暂停 |
 | 2026-09-28 | `GH-03` | 无头 Chrome 截取 1280×640 品牌图 → `.github/social-preview.png`；仓库 Settings 上传 Social preview | 缩略图尺寸下 Logo、项目名、主标语均可读；设置页已显示预览；另存 `public/social-preview.png` 并在 BaseLayout 输出 `og:image`（线上指向 `/cyber-eggs/social-preview.png`） |
+| 2026-09-29 | `COLLECT-01` | 独立服务 `python3 -m unittest discover -s tests -v`；`opencli list -f yaml`；`opencli linux-do -h`；`opencli weixin -h` | 采集服务测试通过；确认 Linux.do 与微信公众号命令契约；实时探测因 OpenCLI Browser Bridge 未连接失败，已作为可重试错误保留，未发布任何真实数据 |
 
 后续模型必须在完成任务后向本表追加一行真实证据；不得填写未执行的命令。

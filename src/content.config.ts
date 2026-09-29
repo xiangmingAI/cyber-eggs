@@ -24,7 +24,7 @@ export const eggSchema = z.object({
   verifiedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   expiresAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
   featured: z.boolean().default(false),
-  demo: z.literal(true),
+  demo: z.boolean().default(false),
   steps: z.array(z.string().min(1)).min(1).max(5),
 });
 

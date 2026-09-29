@@ -11,7 +11,7 @@ export const GET: APIRoute = async () => {
       {
         version: "1",
         generatedAt: new Date().toISOString(),
-        demo: true,
+        demo: eggs.every((egg) => egg.data.demo),
         items: eggs.map(serializeEgg),
       },
       null,

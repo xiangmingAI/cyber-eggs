@@ -84,7 +84,7 @@ const githubUrl = import.meta.env.PUBLIC_GITHUB_REPO_URL ?? "https://github.com/
             {data.modalities.map((modality) => <li># {modalityLabels[modality] ?? modality}</li>)}
             {data.regions.map((region) => <li>{region}</li>)}
           </ul>
-          <p class="demo-tag">演示数据 · DEMO</p>
+          {data.demo && <p class="demo-tag">演示数据 · DEMO</p>}
         </section>
 
         <section class="panel">
@@ -102,7 +102,7 @@ const githubUrl = import.meta.env.PUBLIC_GITHUB_REPO_URL ?? "https://github.com/
         <section class="detail-columns">
           <div class="receipt">
             <h2>官方规则来源 <span class="eyebrow__slashes" aria-hidden="true">///</span><span class="receipt__stamp">✓ 已核验</span></h2>
-            <p>以下为官方活动页面，建议在领取前仔细阅读最新规则。Demo 链接不跳转到真实厂商。</p>
+            <p>以下为收集到的来源和领取入口，领取前请仔细阅读服务商的最新规则。</p>
             <code>{data.sourceUrl}</code>
             <p class="receipt__foot"><span>最后核验　<strong>{data.verifiedAt}</strong></span><span class="receipt__barcode" aria-hidden="true"><i class="barcode"></i>CYBER-EGGS VERIFIED</span></p>
           </div>
@@ -131,15 +131,15 @@ const githubUrl = import.meta.env.PUBLIC_GITHUB_REPO_URL ?? "https://github.com/
             </strong>
             <span class="claim-panel__shelf" aria-hidden="true"></span>
           </div>
-          <span class="button button--large claim-panel__cta" aria-disabled="true">{ctaLabels[data.status]} <i aria-hidden="true">→</i></span>
-          <a class="button claim-panel__source" href={data.sourceUrl} rel="noreferrer">查看蛋源 <i aria-hidden="true">↗</i></a>
+          <a class="button button--large claim-panel__cta" href={data.claimUrl} target="_blank" rel="noreferrer">{ctaLabels[data.status]} <i aria-hidden="true">→</i></a>
+          <a class="button claim-panel__source" href={data.sourceUrl} target="_blank" rel="noreferrer">查看蛋源 <i aria-hidden="true">↗</i></a>
           <dl class="claim-panel__meta">
             <div><dt>到期时间</dt><dd>{data.expiresAt ? (daysLeft !== null && daysLeft > 0 ? `还有 ${daysLeft} 天` : "已到期") : "长期有效"}</dd></div>
             <div><dt>来自</dt><dd>{data.provider}</dd></div>
             <div><dt>蛋的类型</dt><dd>{kindLabels[data.kind]}</dd></div>
             <div><dt>适用场景</dt><dd>{data.modalities.map((m) => modalityLabels[m] ?? m).join(" / ")}</dd></div>
           </dl>
-          <p class="claim-panel__note">演示阶段：按钮不跳转到真实厂商，仅展示信息结构。</p>
+          <p class="claim-panel__note">领取前请自行核对额度、地区、有效期和服务条款。</p>
         </aside>
         <aside class="report-panel">
           <span class="report-panel__icon" aria-hidden="true"></span>

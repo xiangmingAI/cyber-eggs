@@ -1,0 +1,57 @@
+name: Sync published eggs from Feishu
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-feishu
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Pull published view from Feishu
+        run: node scripts/sync-feishu.mjs
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+          FEISHU_BASE_TOKEN: ${{ secrets.FEISHU_BASE_TOKEN }}
+          FEISHU_TABLE_ID: ${{ secrets.FEISHU_TABLE_ID }}
+          FEISHU_VIEW_ID: ${{ secrets.FEISHU_VIEW_ID }}
+
+      - name: Validate static site
+        run: npm run validate
+        env:
+          SITE_URL: https://xiangmingai.github.io
+          BASE_PATH: /cyber-eggs
+          PUBLIC_GITHUB_REPO_URL: https://github.com/xiangmingAI/cyber-eggs
+
+      - name: Commit synchronized data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/data/eggs; then
+            echo "No published egg changes."
+            exit 0
+          fi
+          git add src/data/eggs
+          git commit -m "[AI] chore: sync published eggs from Feishu"
+          git push

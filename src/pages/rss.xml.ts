@@ -34,7 +34,7 @@ export const GET: APIRoute = async ({ site }) => {
 <channel>
   <title>cyber-eggs / 赛博鸡蛋</title>
   <link>${origin}</link>
-  <description>AI 免费配额雷达（当前为演示数据）</description>
+  <description>AI 免费配额雷达（人工审核发布）</description>
   ${items}
 </channel>
 </rss>`,

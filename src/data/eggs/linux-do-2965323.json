@@ -1,0 +1,40 @@
+{
+  "id": "linux-do-2965323",
+  "provider": "CUN.AI",
+  "title": "CUN.AI：新用户赠送 5.8 美元",
+  "summary": "Linux.do 原帖称 CUN.AI 新用户注册可获 5.8 美元，活动截止时间临近且可能存在条件冲突。",
+  "kind": "limited",
+  "status": "fresh",
+  "quota": {
+    "label": "新用户 5.8 美元；首充及注册条件需复核",
+    "reset": "once"
+  },
+  "modalities": [
+    "text"
+  ],
+  "regions": [
+    "中国大陆"
+  ],
+  "requirements": {
+    "card": false,
+    "phone": false,
+    "kyc": false
+  },
+  "claimUrl": "https://linux.do/t/topic/2965323](https://linux.do/t/topic/2965323",
+  "sourceUrl": "https://linux.do/t/topic/2965323](https://linux.do/t/topic/2965323",
+  "verifiedAt": "2026-09-29",
+  "expiresAt": null,
+  "featured": false,
+  "demo": false,
+  "steps": [
+    "打开 Linux.do 原帖确认当前活动状态",
+    "按原帖入口注册 CUN.AI",
+    "核对赠金是否到账及有效期"
+  ],
+  "collection": {
+    "eggId": "linux-do:2965323",
+    "recordId": "reczz28HQM7tsN6B",
+    "sourceType": "Linux.do",
+    "syncedAt": "2026-09-29"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "linux-do-2966593",
+  "provider": "SoleAPI",
+  "title": "SoleAPI：新用户赠送 5 美元",
+  "summary": "Linux.do 方式注册 SoleAPI 可获得 5 美元新用户额度，另有 30 美元抽奖活动。",
+  "kind": "limited",
+  "status": "fresh",
+  "quota": {
+    "label": "新用户 5 美元；另有抽奖额度，非必得",
+    "reset": "once"
+  },
+  "modalities": [
+    "text"
+  ],
+  "regions": [
+    "中国大陆"
+  ],
+  "requirements": {
+    "card": false,
+    "phone": false,
+    "kyc": false
+  },
+  "claimUrl": "https://linux.do/t/topic/2966593](https://linux.do/t/topic/2966593",
+  "sourceUrl": "https://linux.do/t/topic/2966593](https://linux.do/t/topic/2966593",
+  "verifiedAt": "2026-09-29",
+  "expiresAt": null,
+  "featured": false,
+  "demo": false,
+  "steps": [
+    "打开 Linux.do 原帖确认活动规则",
+    "按原帖入口注册 SoleAPI",
+    "确认新用户额度到账；抽奖需按帖内要求参与"
+  ],
+  "collection": {
+    "eggId": "linux-do:2966593",
+    "recordId": "reczz28HQM7ts5oO",
+    "sourceType": "Linux.do",
+    "syncedAt": "2026-09-29"
+  }
+}
