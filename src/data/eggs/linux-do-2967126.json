@@ -20,9 +20,9 @@
     "phone": false,
     "kyc": false
   },
-  "claimUrl": "https://linux.do/t/topic/2967126](https://linux.do/t/topic/2967126",
-  "sourceUrl": "https://linux.do/t/topic/2967126](https://linux.do/t/topic/2967126",
-  "verifiedAt": "2026-09-29",
+  "claimUrl": "https://linux.do/t/topic/2967126",
+  "sourceUrl": "https://linux.do/t/topic/2967126",
+  "verifiedAt": "2026-09-30",
   "expiresAt": null,
   "featured": false,
   "demo": false,
@@ -35,6 +35,6 @@
     "eggId": "linux-do:2967126",
     "recordId": "reczz28HQM7tsMH3",
     "sourceType": "Linux.do",
-    "syncedAt": "2026-09-29"
+    "syncedAt": "2026-09-30"
   }
 }
