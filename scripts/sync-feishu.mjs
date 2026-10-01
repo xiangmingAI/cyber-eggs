@@ -69,6 +69,15 @@ const slugify = (value) => text(value)
 
 const getField = (fields, name) => fields[name];
 
+const isLinuxDo = (value) => {
+  try {
+    const host = new URL(url(value)).hostname.toLowerCase().replace(/^www\./, "");
+    return host === "linux.do" || host.endsWith(".linux.do");
+  } catch {
+    return false;
+  }
+};
+
 function fromCliMatrix(payload) {
   const fields = payload?.data?.fields ?? [];
   return (payload?.data?.data ?? []).map((row, index) => ({
@@ -122,7 +131,10 @@ function toEgg(record) {
   const title = text(getField(fields, "标题"));
   const sourceUrl = url(getField(fields, "来源地址"));
   const claimUrl = url(getField(fields, "领取地址")) || sourceUrl;
+  const sourceStatus = option(getField(fields, "原始来源状态"), "legacy");
   if (!eggId || !title || !sourceUrl || !claimUrl) return null;
+  if (isLinuxDo(sourceUrl) || isLinuxDo(claimUrl)) return null;
+  if (sourceStatus !== "legacy" && sourceStatus !== "confirmed") return null;
 
   const steps = text(getField(fields, "领取步骤"))
     .split(/\r?\n/)
@@ -159,6 +171,7 @@ function toEgg(record) {
       eggId,
       recordId: text(record.record_id),
       sourceType: option(getField(fields, "来源类型"), "其他"),
+      sourceStatus,
       syncedAt: syncDate,
     },
   };
@@ -166,7 +179,7 @@ function toEgg(record) {
 
 const records = await fetchRecords();
 const eggs = records.map(toEgg).filter(Boolean);
-if (!eggs.length) throw new Error("No approved, non-expired records found in the Feishu publish view.");
+if (!records.length) throw new Error("Feishu publish view returned no records; refusing to clear the site on an unexpected empty response.");
 
 await mkdir(outputDir, { recursive: true });
 for (const filename of await readdir(outputDir)) {
